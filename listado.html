@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+                
+        
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <meta name="color-scheme" content="light dark">
+
+        
+        <link rel="stylesheet" href="css/index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>Asis Qr Inicio</title>
+
+       <style>
+           #graficos {
+            position: relative; 
+            display: inline-block; 
+            margin: .5em; 
+            padding: 0 .5em; 
+            font: 900 2em/1.2 sans-serif; 
+            background: gainsboro; 
+            }
+            .columna {
+            position: relative; 
+            display: inline-block; 
+            font: 900 .5em/1 serif; 
+            width: 5em; height: 15em; 
+            text-align: center; 
+            padding-top: 7em; 
+            margin: 5px 0; 
+            color: black; 
+            background: darkgrey; 
+            box-shadow: inset 0 0 0 0 black; 
+            transition: box-shadow 1500ms cubic-bezier(.45,.3,1,.3); 
+            }
+
+
+       </style>
+</head>
+    <body>
+        <div>
+            
+            <div>
+                
+                <p style="color: white;top:20px;font-size:50px;" align="center">Colegio Asis</p>
+                <br>
+                <h5 style="color: white;" align="center">Calificaciones De Alumnos </h5>
+
+                <div align="center">
+                      
+                       <table class="table">
+                           <thead class="thead-dark">
+                               <tr>
+                                   <th>Curso</th>
+                                   <th>Profesor</th>
+                                   <th>Estudiante</th>
+                                   <th>Calificacion</th>
+                               </tr>
+                           </thead>
+                           <tbody id="res">
+
+                           </tbody>
+                           
+                       </table>
+                      
+                   
+                   
+                    <h5 style="color: white;" align="center">Porcentaje De Avances de sus Cursos </h5>
+                    <div id="graficos" align="center">
+
+                        
+                        
+                        
+                        </div>
+            
+                        <br>
+                        <br>
+                </div>
+
+
+            </div>
+            
+
+        </div>
+        
+        <script>
+     
+                $(document).ready(function(){
+            
+                    var MiIdUser= localStorage.getItem("MiUserId");
+                    
+                                    //FUNCIONES AJAX
+                        $.ajax({
+                            url: 'https://rescatame-ecuador.com/colegio/serviciolistadonotas.php',
+                            type: 'get',
+                            data : { idUser :MiIdUser},
+                            dataType: 'JSON',
+                            success: function(response){
+           //alert(response);
+		   if(response.success!=0)
+		   {
+			  var rees=document.getElementById("res");
+              rees.innerHTML='';
+
+
+              var rees2=document.getElementById("graficos");
+              rees2.innerHTML='';
+
+
+               for (x of response) {
+                //console.log(x.nombreEvento);
+                rees.innerHTML +=`
+                <tr>
+                 <td style="color:#ffffff">${x.nombreCurso}</td>
+                 <td style="color:#ffffff">${x.nombresProfesores}</td>
+                 <td style="color:#ffffff">${x.nombresEstudiantes}</td>
+                 <td style="color:#ffffff">${x.calificaciones}</td>
+                </tr>
+                
+                `
+
+                rees2.innerHTML +=`
+                <div class=columna style="font-size:12px;color:#ffffff;">${x.porcentajes+'<br>'+x.nombresEstudiantes}</div>
+                
+                `
+                }
+              
+	  
+	  			//..........................................
+                  var columnas = document.querySelectorAll("#graficos .columna"); 
+            
+            for(elem=0; columnas[elem]; elem++) {
+                estaCol = columnas[elem]; 
+                pinta = ( (parseInt(estaCol.innerHTML) / 100) * estaCol.offsetHeight ).toFixed(0); 
+                
+                estaCol.style.boxShadow = "inset 0 -"+ pinta +"px 0 0 black"; 
+            }; 
+			   }
+			   
+			   else if(response.success==0){
+				  
+			   alert("Aun no Existen Alumnos");
+			   }
+			   
+			    else if(response.success===null){
+                    alert("Aun no Existen Alumnos");
+			   }
+			
+        }
+    });
+
+
+
+            
+
+
+            });
+
+
+        </script>
+    </body>
+</html>

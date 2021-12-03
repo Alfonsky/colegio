@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+       
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <meta name="color-scheme" content="light dark">
+
+        
+        <link rel="stylesheet" href="css/index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>Asis Qr Inicio</title>
+
+        <style>
+            body {
+              font-family: 'Lato', sans-serif;
+            }
+            
+            .overlay {
+              height: 100%;
+              width: 0;
+              position: fixed;
+              z-index: 1;
+              top: 0;
+              left: 0;
+              background-color: rgb(0,0,0);
+              background-color: rgba(0,0,0, 0.9);
+              overflow-x: hidden;
+              transition: 0.5s;
+            }
+            
+            .overlay-content {
+              position: relative;
+              top: 25%;
+              width: 100%;
+              text-align: center;
+              margin-top: 30px;
+            }
+            
+            .overlay a {
+              padding: 8px;
+              text-decoration: none;
+              font-size: 16px;
+              color: #818181;
+              display: block;
+              transition: 0.3s;
+            }
+            
+            .overlay a:hover, .overlay a:focus {
+              color: #f1f1f1;
+            }
+            
+            .overlay .closebtn {
+              position: absolute;
+              top: 20px;
+              right: 45px;
+              font-size: 60px;
+            }
+            
+            @media screen and (max-height: 450px) {
+              .overlay a {font-size: 20px}
+              .overlay .closebtn {
+              font-size: 40px;
+              top: 15px;
+              right: 35px;
+              }
+            }
+            </style>
+</head>
+    <body>
+
+        <div id="myNav" class="overlay">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+              <a href="listado.html">Listado de Calificaciones</a>
+              <a href="index.html" onclick="cerrarsesion()">Cerrar sesión</a>
+              
+            </div>
+          </div>
+       
+         
+          <span style="font-size:30px;cursor:pointer;padding-left: 20px; color:#f1f1f1" onclick="openNav()">&#9776;</span>
+
+
+        <div>
+            
+            <div>
+                
+                <p style="color: white;top:20px;font-size:50px;" align="center">Colegio Asis</p>
+                <p style="color: white;top:30px;font-size:20px;" align="center" id="segunRol"></p>
+                <br>
+               
+                <div align="center">
+                      
+                    
+                        
+                  <div align="center" id="RegUsuarios">
+                    <a href="registro.html" class="btn btn-dark" style="width: 80%;">Registro Usuarios</a>
+                      
+                  
+                  </div>
+
+                <br>
+                <br>
+
+                <div align="center" id="RegEstudiantes">
+                    <a href="registro2.html" class="btn btn-dark" style="width: 80%;">Registro Estudiantes</a>
+                      
+                  
+                </div>
+                
+                <br>
+                <br>
+
+                <div align="center" id="RegProfesores">
+                    <a href="registro3.html" class="btn btn-dark" style="width: 80%;">Registro Profesores</a>
+                      
+                </div>
+
+                <br>
+                <br>
+
+                <div align="center" id="RegCalificaciones">
+                    <a href="registro4.html" class="btn btn-dark" style="width: 80%;">Asignacion de Calificaciones</a>
+                      
+                </div>
+                    
+            
+                
+                </div>
+
+
+            </div>
+        </div>
+      
+        <script>
+          
+
+
+
+function cerrarsesion(){
+    alert("cerrando sesion");
+    localStorage.clear();
+    //window.location="index.html";
+}
+
+
+
+
+        </script>
+
+
+
+<script>
+
+$(document).ready(function(){
+   
+
+    var MiIdUser= localStorage.getItem("MiUserId");
+    //alert(MiIdUser);
+    if (MiIdUser == "undefined" || MiIdUser == null)
+   {
+    window.location="inicio.html";
+
+   }
+   else{
+   
+    console.log("Bienvenido");
+    var MiIdRol= localStorage.getItem("MiUserRol");
+    var rees=document.getElementById("segunRol");
+    if(MiIdRol==1){
+      rees.innerHTML="Bienvenido Administrador";
+      document.getElementById("RegUsuarios").style.visibility = "visible";
+      document.getElementById("RegEstudiantes").style.visibility = "visible";
+      document.getElementById("RegProfesores").style.visibility = "visible";
+      document.getElementById("RegCalificaciones").style.visibility = "hidden";
+      
+    }
+    else if(MiIdRol==2){
+      rees.innerHTML="Bienvenido Estudiante";
+      document.getElementById("RegUsuarios").style.visibility = "hidden";
+      document.getElementById("RegEstudiantes").style.visibility = "hidden";
+      document.getElementById("RegProfesores").style.visibility = "hidden";
+      document.getElementById("RegCalificaciones").style.visibility = "hidden";
+    }
+    else if(MiIdRol==3){
+      rees.innerHTML="Bienvenido Profesor";
+      document.getElementById("RegUsuarios").style.visibility = "hidden";
+      document.getElementById("RegEstudiantes").style.visibility = "visible";
+      document.getElementById("RegProfesores").style.visibility = "hidden";
+      document.getElementById("RegCalificaciones").style.visibility = "visible";
+    }
+    else{}
+   }
+
+});
+
+</script>
+
+
+
+<script>
+    function openNav() {
+      document.getElementById("myNav").style.width = "100%";
+    }
+    
+    function closeNav() {
+      document.getElementById("myNav").style.width = "0%";
+    }
+    </script>
+
+
+    </body>
+</html>

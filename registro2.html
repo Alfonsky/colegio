@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        
+       
+        
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <meta name="color-scheme" content="light dark">
+
+        
+        <link rel="stylesheet" href="css/index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>Colegio Asis</title>
+
+       
+</head>
+    <body>
+        <div>
+            
+            <div>
+                
+                <p style="color: white;top:20px;font-size:50px;" align="center">Colegio Asis</p>
+                <br>
+                <h5 style="color: white;" align="center">Registro de Estudiantes</h5>
+
+                <div align="center">
+                    <br>
+                    <br>
+                    <br>
+                    <div class="input-group mb-3" style="width:80%;">
+                        <input type="text" name="strApellidos" id="strApellidos" required class="form-control" placeholder="Apellidos" aria-label="Apellidos" aria-describedby="basic-addon1">
+                    </div>
+                    <br>
+                    <div class="input-group mb-3" style="width:80%;">
+                        <input type="text" name="strNombresU" id="strNombresU" required class="form-control" placeholder="Nombres" aria-label="Nombres" aria-describedby="basic-addon1">
+                    </div>
+                       
+                       
+                    <br>
+                    <div class="input-group mb-3" style="width:80%;">
+                        
+                        <input type="email" id="mail" name="mail" required class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                           
+                    </div>
+
+                    <br>
+                    <div class="input-group mb-3" style="width:80%;">
+                        
+                       
+                        <input style="padding: 0 48px 0 10px;" type="number" name="cedula" id="cedula" required class="form-control" placeholder="Cedula" aria-label="Cedula" aria-describedby="basic-addon1">
+                              
+                    </div>
+                    <br>
+                    <h5 style="color: white;width:80%;font-size:12px;" align="left">Seleccione Curso</h5>
+                    <div class="input-group mb-3" style="width:80%;">
+                        
+                        <select name="curso" id="curso" style="padding: 0 48px 0 10px;" class="form-control">
+                           
+                            
+                          </select>
+                              
+                    </div>
+                       
+                    <br>
+                    <br>
+                        </p>
+                        
+                        <div align="center">
+                            <button name="button" onclick="EnViaUsers()" class="btn btn-dark" style="width: 80%;">Regístrate</button>
+                        </div>
+                    
+            
+                
+                </div>
+
+
+            </div>
+        </div>
+        
+        <script>
+     
+     function EnViaUsers() {
+
+var correo = document.getElementById("mail").value; 
+var apellidos = document.getElementsByName("strApellidos")[0].value;
+var nom = document.getElementsByName("strNombresU")[0].value;
+var cedula = document.getElementsByName("cedula")[0].value;
+var cursos = document.getElementsByName("curso")[0].value;
+var hoy = new Date();
+var fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear();
+var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+var fechadecreacion = fecha + ' ' + hora;
+
+
+var expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+
+if ( !expr.test(correo) ){                                                            //COMPRUEBA MAIL
+    alert("Error: La dirección de correo " + correo + " es incorrecta.");
+    return false;
+}
+
+if (nom == ""||cedula == "" ||cursos==""||apellidos=="") {  //COMPRUEBA CAMPOS VACIOS
+    alert("Los campos no pueden quedar vacios");
+    return false;
+}
+
+
+
+
+
+//FUNCIONES AJAX
+$.ajax({
+    url: 'https://rescatame-ecuador.com/colegio/servicio2Estudiante.php',
+    type: 'get',
+    data : { apellidosEstudiante :apellidos,nombresEstudiante :nom, cedulaEstudiante :cedula,elcurso:cursos,elcorreo:correo,fechacreacion:fechadecreacion},
+    dataType: 'JSON',
+    success: function(response){
+       //alert(response);
+       if(response==1)
+       {
+          // alert("estaloggeado");
+           //.........................................................
+            
+            
+            alert("Estudiante Registrado Correctamente");
+
+            window.location="scan.html";
+             
+              //setTimeout(sesActiva, 3000);
+  
+              //..........................................
+           }
+           
+           else if(response==0){
+              
+           alert("Ha ocurrido un error, intenta nuevamente");
+           }
+           
+            else if(response===null){
+                alert("Ha ocurrido un error, intenta nuevamente");
+           }
+        
+    }
+});
+
+}
+
+
+
+
+
+
+        </script>
+    </body>
+
+    <script>
+     
+        $(document).ready(function(){
+
+
+            var MiIdUsers= localStorage.getItem("MiUserId");
+            var MiIdRoler= localStorage.getItem("MiUserRol");
+            //alert(MiIdUser);
+            if (MiIdUsers == "undefined" || MiIdUsers == null)
+           {
+            window.location="inicio.html";
+	  
+           }
+           else{
+                if(MiIdRoler==1||MiIdRoler==3)
+                {
+                    console.log("ok");
+                }
+                else{
+
+                    window.location="scan.html";
+                }
+            
+           }
+
+    
+            var MiIdUser= "1";
+            
+                            //FUNCIONES AJAX
+                $.ajax({
+                    url: 'https://rescatame-ecuador.com/colegio/servicio5.php',
+                    type: 'get',
+                    data : { idUser :MiIdUser},
+                    dataType: 'JSON',
+                    success: function(response){
+   //alert(response);
+   if(response.success!=0)
+   {
+      var rees=document.getElementById("curso");
+      rees.innerHTML='';
+       for (x of response) {
+        //console.log(x.nombreEvento);
+        rees.innerHTML +=`
+        <option value="${x.idCurso}">${x.nombreCurso}</option>
+         
+        
+        
+        `
+        }
+      
+
+          //..........................................
+       }
+       
+       else if(response.success==0){
+          
+       alert("nada");
+       }
+       
+        else if(response.success===null){
+            alert("nada");
+       }
+    
+}
+});
+
+
+    });
+
+
+</script>
+</html>
